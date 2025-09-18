@@ -1,0 +1,119 @@
+/* Общие стили */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    height: 100vh;
+}
+
+/* Стили боковой панели */
+.sidebar {
+    width: 10%;
+    background-color: #2c3e50;
+    color: white;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.sidebar nav li {
+    margin-bottom: 1rem;
+}
+
+.sidebar nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar nav a:hover {
+    background-color: #3498db;
+}
+
+.sidebar nav .active a {
+    background-color: #e67e22;
+    color: white;
+}
+
+/* Основной контент */
+.content {
+    margin-left: 10%;
+    width: 90%;
+    padding: 2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+/* Стилизация таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+table th, table td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Стилизация списка */
+.custom-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+.custom-list li::before {
+    content: url('https://cdn-icons-png.flaticon.com/512/1177/1177562.png');
+    margin-right: 10px;
+}
+
+/* Стиль для подзаголовков с решеткой */
+h2 .anchor {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    margin-left: 5px;
+}
+
+h2:hover .anchor {
+    opacity: 1;
+}
+
+/* Стиль для блочного элемента */
+.box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 1rem;
+}
+
+/* Анимация изображения */
+.animated-image {
+    animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}

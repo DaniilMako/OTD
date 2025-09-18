@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пример HTML-документа</title>
+    <link rel="stylesheet" href="task1.css">
+</head>
+<body>
+    <!-- Боковая панель навигации -->
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="#introduction">Введение</a></li>
+                <li class="active"><a href="#description">Описание</a></li>
+                <li><a href="#conclusion">Заключение</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Основной контент -->
+    <main class="content">
+        <section id="introduction">
+            <h1>Основной заголовок</h1>
+            <p>Это первый абзац текста.</p>
+            <p>Это второй абзац с <strong>жирным</strong> текстом внутри.</p>
+        </section>
+
+        <section id="description">
+            <h2>Подзаголовок<span class="anchor">#</span></h2>
+            <p>Пример блочного элемента:</p>
+            <div class="box">Блочный элемент (div)</div>
+            <p>Примеры строчных элементов: <em>курсив</em>, <a href="#">ссылка</a></p>
+            <img src="https://www.ferra.ru/imgs/2025/01/12/15/6705225/04740752c7f4bbe4ccbea67ec154e281aea78d5b.jpg" alt="Пример изображения" class="animated-image">
+        </section>
+
+        <section id="conclusion">
+            <h2>Заключение</h2>
+            <p>Таблица и списки в примере:</p>
+
+            <!-- Таблица -->
+            <table>
+                <tr><th>Заголовок 1</th><th>Заголовок 2</th></tr>
+                <tr><td>Данные 1</td><td>Данные 2</td></tr>
+                <tr><td>Данные 3</td><td>Данные 4</td></tr>
+            </table>
+
+            <!-- Списки -->
+            <ul class="custom-list">
+                <li>Пункт 1</li>
+                <li>Пункт 2</li>
+            </ul>
+            <ol>
+                <li>Первый шаг</li>
+                <li>Второй шаг</li>
+            </ol>
+        </section>
+    </main>
+</body>
+</html>
