@@ -2,58 +2,91 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Пример HTML-документа</title>
+    <title>Переводчик между русским и эвенским языками</title>
     <link rel="stylesheet" href="task1.css">
 </head>
 <body>
-    <!-- Боковая панель навигации -->
-    <aside class="sidebar">
-        <nav>
-            <ul>
-                <li><a href="#introduction">Введение</a></li>
-                <li class="active"><a href="#description">Описание</a></li>
-                <li><a href="#conclusion">Заключение</a></li>
-            </ul>
-        </nav>
-    </aside>
+<!-- Боковая панель навигации -->
+<aside class="sidebar">
+    <nav>
+        <ul>
+            <li><a href="#introduction">Введение</a></li>
+            <li class="active"><a href="#description">Описание</a></li>
+            <li><a href="#conclusion">Заключение</a></li>
+        </ul>
+    </nav>
+</aside>
 
-    <!-- Основной контент -->
-    <main class="content">
-        <section id="introduction">
-            <h1>Основной заголовок</h1>
-            <p>Это первый абзац текста.</p>
-            <p>Это второй абзац с <strong>жирным</strong> текстом внутри.</p>
-        </section>
+<!-- Основной контент -->
+<main class="content">
+    <section id="introduction">
+        <h1>Переводчик между русским и эвенским языками</h1>
+        <p>В качестве своей <em>выпускной квалификационной работы</em> я решил создать переводчик между я выбрал
+            создание переводчика по соответствующему заголовку</p>
+    </section>
 
-        <section id="description">
-            <h2>Подзаголовок<span class="anchor">#</span></h2>
-            <p>Пример блочного элемента:</p>
-            <div class="box">Блочный элемент (div)</div>
-            <p>Примеры строчных элементов: <em>курсив</em>, <a href="#">ссылка</a></p>
-            <img src="https://www.ferra.ru/imgs/2025/01/12/15/6705225/04740752c7f4bbe4ccbea67ec154e281aea78d5b.jpg" alt="Пример изображения" class="animated-image">
-        </section>
+    <section id="description">
+        <h2>Описание<span class="anchor">#</span></h2>
+        <p><strong>Эве́нский язы́к</strong> (уст. ламутский) — язык эвенов, близок к эвенкийскому, нанайскому,
+            удэгейскому. Относится к тунгусо-маньчжурской семье.</p>
+        <p>Небольшая информация:</p>
+        <div class="box">
+            <p><strong>Интересный факт:</strong> Эвены относятся к коренным малочисленным народам с численностью менее
+                <em>20 тыс</em>.</p>
+        </div>
+        <p>Источник: <a href="https://ru.wikipedia.org/wiki/Эвенский_язык">ссылка на Википедию</a></p>
+        <div class="image-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Расселение_эвенов_2010.png/500px-Расселение_эвенов_2010.png"
+                 alt="Карта расселения эвенов в РФ на 2010г год">
+            <img src="https://i.pinimg.com/736x/9a/6f/b2/9a6fb20006451318e4260394deb107fc.jpg"
+                 alt="Эвенский алфавит" class="animated-image">
+        </div>
 
-        <section id="conclusion">
-            <h2>Заключение</h2>
-            <p>Таблица и списки в примере:</p>
+        <!-- Таблица -->
+        <table>
+            <tr>
+                <th>Характеристика</th>
+                <th>Русский</th>
+                <th>Эвенский</th>
+            </tr>
+            <tr>
+                <td>Число говорящих (2010г)</td>
+                <td>137,5 млн</td>
+                <td>5656</td>
+            </tr>
+            <tr>
+                <td>Количество букв в алфавите (кириллица)</td>
+                <td>33</td>
+                <td>36</td>
+            </tr>
+            <tr>
+                <td>Число падежей</td>
+                <td>6</td>
+                <td>13</td>
+            </tr>
+        </table>
+    </section>
 
-            <!-- Таблица -->
-            <table>
-                <tr><th>Заголовок 1</th><th>Заголовок 2</th></tr>
-                <tr><td>Данные 1</td><td>Данные 2</td></tr>
-                <tr><td>Данные 3</td><td>Данные 4</td></tr>
-            </table>
+    <section id="conclusion">
+        <h2>Заключение<span class="anchor">#</span></h2>
+        <p>Сравнение русского и эвенского</p>
 
-            <!-- Списки -->
-            <ul class="custom-list">
-                <li>Пункт 1</li>
-                <li>Пункт 2</li>
-            </ul>
-            <ol>
-                <li>Первый шаг</li>
-                <li>Второй шаг</li>
-            </ol>
-        </section>
-    </main>
+        <!-- Списки -->
+        <ul class="custom-list">
+            <li>Язык использует <strong>кириллицу</strong> с дополнительными буквами (например, ԓ, Ԅ).</li>
+            <li>Эвенский язык имеет <strong>13 падежей</strong>, что значительно больше, чем в русском (6 падежей).</li>
+            <li>В языке присутствуют <strong>тоновые различия</strong>, которые влияют на смысл слов.</li>
+            <li>Эвенский язык тесно связан с <strong>культурой и традициями эвенов</strong> (народное ремесло, охотничье
+                хозяйство).</li>
+        </ul>
+        <p>Задачи, которые потребуется сделать для выполнения ВКР:</p>
+        <ol>
+            <li><strong>Сбор данных:</strong> Анализ словарных запасов и грамматических особенностей обоих языков.</li>
+            <li><strong>Разработка алгоритма:</strong> Создание системы соответствий между русскими и эвенскими словами.</li>
+            <li><strong>Тестирование:</strong> Проверка точности перевода на примерах текстов и фраз.</li>
+            <li><strong>Оптимизация:</strong> Улучшение скорости работы и добавление функции обратного перевода.</li>
+        </ol>
+    </section>
+</main>
 </body>
 </html>
