@@ -123,10 +123,10 @@ h2:hover .anchor {  /*при наведении будет отображать�
 .animated-image {
     max-width: 40%;
     height: au/to;
-    animation: float 3s infinite ease-in-out;
+    animation: float 3s infinite ease-in-out;  /*начинается и заканчивается медленно, ускоряясь в середине*/
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%, 100% { transform: translateY(0); }  /*начало и конец - from и to*/
+    50% { transform: translateY(-10px); }  /*в середине*/
 }
