@@ -39,11 +39,11 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.sidebar nav a:hover {
+.sidebar nav a:hover {  /*при наведении на пункт меню*/
     background-color: #3498db;
 }
 
-.sidebar nav .active a {
+.sidebar nav .active a { /*активный пункт меню*/
     background-color: #e67e22;
     color: white;
 }
@@ -122,11 +122,11 @@ h2:hover .anchor {  /*при наведении будет отображать�
 /* Анимация изображения */
 .animated-image {
     max-width: 40%;
-    height: au/to;
+    height: auto;
     animation: float 3s infinite ease-in-out;  /*начинается и заканчивается медленно, ускоряясь в середине*/
 }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }  /*начало и конец - from и to*/
-    50% { transform: translateY(-10px); }  /*в середине*/
+@keyframes float {  /*директива*/
+    0%, 100% { transform: translateY(0); }  /*начало и конец - from и to, где изображение не двигается*/
+    50% { transform: translateY(-10px); }  /*в середине изображение поднимается на 10 пикселей вверх*/
 }
