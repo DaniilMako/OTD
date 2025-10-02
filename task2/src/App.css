@@ -1,0 +1,40 @@
+.sidebar {
+  width: 200px;
+  background: #f4f4f4;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+}
+
+.sidebar a.active {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+
+/* Стили для контента */
+/* .content {
+  margin-left: 10%;
+  padding: 2rem;
+  width: 90%;
+} */
+
+/* Активная ссылка в боковой панели */
+/* .sidebar .active {
+  background-color: #e67e22;
+  color: white;
+} */
+
+/* Анимация изображения */
+.animated-image {
+  animation: float 3s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
