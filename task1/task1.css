@@ -9,7 +9,7 @@ body {
 /* Стили боковой панели */
 .sidebar {
     width: 10%;
-    background-color: #2c3e50;
+    background-color: #006bba;
     color: white;
     position: fixed;  /*фиксация панели*/
     top: 0;           /*панель на весь экран*/
@@ -53,7 +53,7 @@ body {
     margin-left: 10%;
     padding-left : 1rem;
     width: 90%;
-    padding: 2rem;  /*зазор между основным контентом и боковой панелью*/
+    padding: 1.5rem;  /*зазор между основным контентом и боковой панелью*/
     box-sizing: border-box;
     overflow-y: auto;
 }
@@ -103,6 +103,10 @@ h2 .anchor {
 h2:hover .anchor {  /*при наведении будет отображаться #*/
     opacity: 1;
 }
+
+/*strong {  *//*жирный шрифт с переносом на новую строку*/
+/*    display: block;*/
+/*}*/
 
 /* Стиль для блочного элемента */
 .box {
