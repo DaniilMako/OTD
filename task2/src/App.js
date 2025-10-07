@@ -1,25 +1,26 @@
-// src/App.js
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
-import MainPanel from './components/MainPanel';
-import IntroPanel from './components/IntroPanel';
-import ConclusionPanel from './components/ConclusionPanel';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+import IntroPanel from "./components/IntroPanel";
+import MainPanel from "./components/MainPanel";
+import ConclusionPanel from "./components/ConclusionPanel";
+import "./App.css"; // CSS взял из первого задания
 
-const App = () => {
+function App() {
   return (
     <Router>
-      <div style={{ display: 'flex', height: '100vh' }}>
+      <div className="body">
         <Sidebar />
-        <MainPanel>
+        <main className="content">
           <Routes>
-            <Route path="/introduction" element={<IntroPanel />} />
+            <Route path="/"           element={<Navigate to="/intro" replace />} />
+            <Route path="/intro"      element={<IntroPanel />} />
+            <Route path="/main"       element={<MainPanel />} />
             <Route path="/conclusion" element={<ConclusionPanel />} />
-            <Route path="/" element={<IntroPanel />} />
           </Routes>
-        </MainPanel>
+        </main>
       </div>
     </Router>
   );
-};
+}
 
 export default App;

@@ -1,40 +1,139 @@
+/* Общие стили */
+body {
+    margin: 0;
+    font-family: 'Segoe UI';
+    display: flex; /* боковая панель и контент в ряд*/
+    height: 100vh;
+}
+
+/* Стили боковой панели */
 .sidebar {
-  width: 200px;
-  background: #f4f4f4;
-  padding: 20px;
-  border-right: 1px solid #ccc;
+    width: 10%;
+    background-color: #2c3e50;
+    color: white;
+    position: fixed;  /*фиксация панели*/
+    top: 0;           /*панель на весь экран*/
+    bottom: 0;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
 }
 
-.sidebar a.active {
-  color: #007bff;
-  font-weight: bold;
+.sidebar nav ul {
+    list-style: none;  /*убрать маркеры*/
+    padding: 0;
+    margin: 0;
+    text-align: center; /*выравнивание по центру*/
 }
 
+.sidebar nav li {
+    margin-bottom: 1rem;  /*отступ между пунктами*/
+}
+
+.sidebar nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar nav a:hover {  /*при наведении на пункт меню*/
+    background-color: #3498db;
+}
+
+.sidebar nav .active { /*активный пункт меню*/
+    background-color: #e67e22;
+    color: white;
+}
+
+/* Основной контент */
 .content {
-  flex: 1;
-  padding: 20px;
+    margin-left: 10%;
+    padding-left : 1rem;
+    width: 90%;
+    padding-left: 6rem;  /*зазор между основным контентом и боковой панелью*/
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
+/* Стилизация таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
 
-/* Стили для контента */
-/* .content {
-  margin-left: 10%;
-  padding: 2rem;
-  width: 90%;
+table th, table td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Стилизация списка */
+.custom-list {
+    list-style: none;
+    /* padding-left: 0; */
+    /* margin-top: 1rem; */
+    /* padding-left: 1rem; */
+}
+
+/* Стиль для маркера списка без before (надо маленькую иконку)*/
+/* .custom-list li {
+    list-style-type: none;
+    list-style-image: url("https://cdn-icons-png.flaticon.com/512/1177/1177562.png");
 } */
 
-/* Активная ссылка в боковой панели */
-/* .sidebar .active {
-  background-color: #e67e22;
-  color: white;
-} */
+.custom-list li::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    background-image: url("https://cdn-icons-png.flaticon.com/512/1177/1177562.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Стиль для подзаголовков с решеткой */
+h2 .anchor {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    margin-left: 5px;
+}
+
+h2:hover .anchor {  /*при наведении будет отображаться #*/
+    opacity: 1;
+}
+
+/* Стиль для блочного элемента */
+.box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 1rem;
+}
+
+/* Стиль для контейнера с изображениями */
+.image-container {
+    display: flex; /* Горизонтальное расположение */
+    gap: 1rem;     /* Отступ между картинками */
+    justify-content: center; /* Центрирование по горизонтали */
+    margin-top: 1rem;
+}
 
 /* Анимация изображения */
 .animated-image {
-  animation: float 3s infinite ease-in-out;
+    max-width: 40%;
+    height: auto;
+    animation: float 3s infinite ease-in-out;  /*начинается и заканчивается медленно, ускоряясь в середине*/
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+@keyframes float {  /*директива*/
+    0%, 100% { transform: translateY(0); }  /*начало и конец - from и to, где изображение не двигается*/
+    50% { transform: translateY(-10px); }  /*в середине изображение поднимается на 10 пикселей вверх*/
 }
