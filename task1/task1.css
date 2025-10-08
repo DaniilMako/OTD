@@ -1,9 +1,18 @@
 /* Общие стили */
 body {
+    height: 100vh;
     margin: 0;
     font-family: 'Segoe UI';
-    display: flex; /* боковая панель и контент в ряд*/
-    height: 100vh;
+/* боковая панель и контент в ряд */
+    display: flex;  /*превращаем в flexbox*/
+}
+
+/*main :is(p, h1, span):hover {*/
+/*    color: #e67e22;*/
+/*}*/
+
+::selection {  /*выделение текста с помощью псевдоэлемента*/
+    background-color: #fffb00;
 }
 
 /* Стили боковой панели */
@@ -15,13 +24,13 @@ body {
     top: 0;           /*панель на весь экран*/
     bottom: 0;
     padding: 2rem 1rem;
-    box-sizing: border-box;
+    box-sizing: border-box;  /*учитывает padding*/
 }
 
 .sidebar nav ul {
-    list-style: none;  /*убрать маркеры*/
-    padding: 0;
+    list-style: none;  /*отключение маркеров*/
     margin: 0;
+    padding: 0;
     text-align: center; /*выравнивание по центру*/
 }
 
@@ -40,57 +49,67 @@ body {
 }
 
 .sidebar nav a:hover {  /*при наведении на пункт меню*/
-    background-color: #3498db;
+    background-color: #73b6e3;
 }
 
 .sidebar nav .active a { /*активный пункт меню*/
-    background-color: #e67e22;
     color: white;
+    background-color: #e67e22;
 }
 
+.sidebar nav a:active {  /*при нажатии на пункт меню*/
+    background-color: #00ff04;
+}
 /* Основной контент */
 .content {
-    margin-left: 10%;
-    padding-left : 1rem;
     width: 90%;
-    padding: 1.5rem;  /*зазор между основным контентом и боковой панелью*/
-    box-sizing: border-box;
+    margin-left: 10%;
+    padding-left : 2rem;  /*зазор между основным контентом и боковой панелью*/
+    padding-bottom: 2rem;
+/*    padding: 1.5rem;*/
+    box-sizing: border-box;  /*учитывает padding*/
     overflow-y: auto;
 }
 
 /* Стилизация таблицы */
 table {
     width: 100%;
+    margin-top: 2rem;
     border-collapse: collapse;
-    margin-top: 1rem;
 }
 
 table th, table td {
-    padding: 0.75rem;
     border: 1px solid #ddd;
+    padding: 0.75rem;
 }
 
 table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #d8d7d7;
 }
 
 /* Стилизация списка */
 .custom-list {
     list-style: none;
+/*    margin-top: 1rem;*/
     padding-left: 0;
-    margin-top: 1rem;
 }
 
 .custom-list li::before {
-    content: "";
+    content: "🔥";
     display: inline-block;
     width: 16px;
     height: 16px;
     margin-right: 8px;
-    background-image: url("https://cdn-icons-png.flaticon.com/512/1177/1177562.png");
+/*    background-image: url("https://cdn-icons-png.flaticon.com/512/1177/1177562.png");*/
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+/* Стиль для маркера списка без before (надо маленькую иконку)*/
+/* .custom-list li {
+    list-style-type: none;
+    list-style-image: url("https://cdn-icons-png.flaticon.com/512/1177/1177562.png");
+} */
 
 /* Стиль для подзаголовков с решеткой */
 h2 .anchor {
@@ -110,24 +129,25 @@ h2:hover .anchor {  /*при наведении будет отображать�
 
 /* Стиль для блочного элемента */
 .box {
-    border: 1px solid #ccc;
-    padding: 10px;
     margin-top: 1rem;
+    border: 1px solid #575757;
+    padding: 10px;
 }
 
 /* Стиль для контейнера с изображениями */
 .image-container {
+    margin-top: 2rem;
+/*    gap: 2rem;     *//* Отступ между картинками */
     display: flex; /* Горизонтальное расположение */
-    gap: 1rem;     /* Отступ между картинками */
-    justify-content: center; /* Центрирование по горизонтали */
-    margin-top: 1rem;
+    justify-content: space-evenly; /* Центрирование по горизонтали */
+    flex-wrap: wrap;  /* Разбить на несколько строк, если не помещается в одну строку*/
 }
 
 /* Анимация изображения */
 .animated-image {
     max-width: 40%;
     height: auto;
-    animation: float 3s infinite ease-in-out;  /*начинается и заканчивается медленно, ускоряясь в середине*/
+    animation: float 3s infinite ease-in-out 3s;  /*начинается и заканчивается медленно, ускоряясь в середине; второе время - это задержка*/
 }
 
 @keyframes float {  /*директива*/
