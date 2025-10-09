@@ -2,8 +2,12 @@
 body {
     margin: 0;
     font-family: 'Segoe UI';
-    display: flex; /* боковая панель и контент в ряд*/
+/*    display: flex; *//* боковая панель и контент в ряд*/
     height: 100vh;
+}
+
+::selection {  /*выделение текста с помощью псевдоэлемента*/
+    background-color: #fffb00;
 }
 
 /* Стили боковой панели */
@@ -48,13 +52,18 @@ body {
     color: white;
 }
 
+.sidebar nav a:active {  /*при нажатии на пункт меню*/
+    background-color: #00ff04;
+}
+
 /* Основной контент */
 .content {
-    margin-left: 10%;
-    padding-left : 1rem;
     width: 90%;
-    padding-left: 6rem;  /*зазор между основным контентом и боковой панелью*/
-    box-sizing: border-box;
+    margin-left: 10%;
+    padding-left : 2rem;  /*зазор между основным контентом и боковой панелью*/
+    padding-bottom: 2rem;
+    /*    padding: 1.5rem;*/
+    box-sizing: border-box;  /*учитывает padding*/
     overflow-y: auto;
 }
 
@@ -77,9 +86,20 @@ table tr:nth-child(even) {
 /* Стилизация списка */
 .custom-list {
     list-style: none;
-    /* padding-left: 0; */
     /* margin-top: 1rem; */
+     padding-left: 0;
     /* padding-left: 1rem; */
+}
+
+.custom-list li::before {
+    content: "📌";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+/*    background-image: url("https://cdn-icons-png.flaticon.com/512/1177/1177562.png");*/
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 /* Стиль для маркера списка без before (надо маленькую иконку)*/
@@ -87,17 +107,6 @@ table tr:nth-child(even) {
     list-style-type: none;
     list-style-image: url("https://cdn-icons-png.flaticon.com/512/1177/1177562.png");
 } */
-
-.custom-list li::before {
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-    background-image: url("https://cdn-icons-png.flaticon.com/512/1177/1177562.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-}
 
 /* Стиль для подзаголовков с решеткой */
 h2 .anchor {
@@ -120,17 +129,18 @@ h2:hover .anchor {  /*при наведении будет отображать�
 
 /* Стиль для контейнера с изображениями */
 .image-container {
+    margin-top: 2rem;
+    /*    gap: 2rem;     *//* Отступ между картинками */
     display: flex; /* Горизонтальное расположение */
-    gap: 1rem;     /* Отступ между картинками */
-    justify-content: center; /* Центрирование по горизонтали */
-    margin-top: 1rem;
+    justify-content: space-evenly; /* Центрирование по горизонтали */
+    flex-wrap: wrap;  /* Разбить на несколько строк, если не помещается в одну строку*/
 }
 
 /* Анимация изображения */
 .animated-image {
     max-width: 40%;
     height: auto;
-    animation: float 3s infinite ease-in-out;  /*начинается и заканчивается медленно, ускоряясь в середине*/
+    animation: float 3s infinite ease-in-out 3s;  /*начинается и заканчивается медленно, ускоряясь в середине; второе время - это задержка*/
 }
 
 @keyframes float {  /*директива*/
