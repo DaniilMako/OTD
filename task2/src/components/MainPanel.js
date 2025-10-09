@@ -17,6 +17,7 @@ const MainPanel = () => {
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Расселение_эвенов_2010.png/500px-Расселение_эвенов_2010.png"
              alt="Карта расселения эвенов в РФ на 2010г год"/>
         <img src="https://i.pinimg.com/736x/9a/6f/b2/9a6fb20006451318e4260394deb107fc.jpg"
+//        <img src="src/images/алфавит.jpg"
              alt="Эвенский алфавит" class="animated-image"/>
       </div>
 
