@@ -1,74 +1,110 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "axios";
 
-// ДОБАВИТЬ FETCH И ВЫБОР СПОСОБА GET ЗАПРОСА
-
-
-
 const PostsPanel = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [postCount, setPostCount] = useState(10);
+  const [useAxios, setUseAxios] = useState(true); // Режим: axios / fetch
 
-  // загрузка данных через axios
-  // благодаря useCallback - не будет повторного запроса
-  const axiosPosts = useCallback(async () => {
+  // === Загрузка данных через Axios ===
+  const loadWithAxios = useCallback(async () => {
     try {
-      // GET-запрос к API
       const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
-      
-      // Сохраняем данные в состоянии
       setPosts(response.data);
       setIsError(false);
-
-    // Обработка ошибок
     } catch (error) {
       setIsError(true);
       console.error("Axios error:", error);
     } finally {
-      // Снимаем флаг загрузки
       setIsLoading(false);
     }
   }, []);
 
-  // Вызов запроса при монтировании
-  useEffect(() => {
-    axiosPosts()
-  }, [axiosPosts]);
+  // === Загрузка данных через Fetch ===
+  const loadWithFetch = useCallback(async () => {
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+      if (!response.ok) throw new Error("Ошибка сети");
+      const data = await response.json();
+      setPosts(data);
+      setIsError(false);
+    } catch (error) {
+      setIsError(true);
+      console.error("Fetch error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-  // Мемоизация отфильтрованных постов
+  // === Выбор метода загрузки ===
+  useEffect(() => {
+    if (useAxios) {
+      loadWithAxios();
+    } else {
+      loadWithFetch();
+    }
+  }, [useAxios, loadWithAxios, loadWithFetch]);
+
+  // === Мемоизация отфильтрованных постов ===
   const memoizedPosts = useMemo(() => {
-    return posts.slice(0, postCount);  // Отбираем первые N постов
+    return posts.slice(0, postCount);
   }, [posts, postCount]);
 
+  // === Отрисовка компонента ===
   return (
-    <div>
-      <h2>Посты<span class="anchor">🧷</span></h2>
+    <section>
+      <h2>Посты<span className="anchor">🧷</span></h2>
 
-      <label> Количество постов:
+      {/* Переключатель между axios и fetch */}
+      <div className="method-toggle">
+        <label>Выбор метода:</label>
+        <label>
+          <input
+            type="radio"
+            checked={useAxios}
+            onChange={() => setUseAxios(true)}
+          />
+          Axios
+        </label>
+        <label>
+          <input
+            type="radio"
+            checked={!useAxios}
+            onChange={() => setUseAxios(false)}
+          />
+          Fetch
+        </label>
+      </div>
+
+      {/* Контроль количества постов */}
+      <div className="range-slider">
+        <label>Количество постов:</label>
         <input
           type="range"
           min="1"
-          max="50"
+          max="100"
           value={postCount}
           onChange={(e) => setPostCount(parseInt(e.target.value))}
         />
-        {postCount}
-      </label>
+        <span>{postCount}</span>
+      </div>
 
-      {isLoading && <p>Загрузка...</p>}
-      {isError && <p>❌Ошибка загрузки данных❗❌</p>}
+      {/* Состояния загрузки/ошибки */}
+      {isLoading && <p className="status-message">Загрузка...</p>}
+      {isError && <p className="status-message">❌ Ошибка загрузки данных ❌</p>}
 
-      <ol>
+      {/* Отображение постов */}
+      <ol className="posts-container">
         {memoizedPosts.map((post) => (
-          <li key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
+          <li key={post.id} className="post-card">
+            <h3 className="post-title">{post.title}</h3>
+            <p className="post-body">{post.body}</p>
           </li>
         ))}
       </ol>
-    </div>
+    </section>
   );
 };
 
