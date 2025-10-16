@@ -52,6 +52,10 @@ const PostsPanel = () => {
     return posts.slice(0, postCount);
   }, [posts, postCount]);
 
+  if (isLoading) {
+    return (<section><p className="status-message">Загрузка...</p></section>);
+  }
+
   // === Отрисовка компонента ===
   return (
     <section>
