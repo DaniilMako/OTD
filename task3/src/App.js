@@ -4,7 +4,7 @@ import IntroPanel from "./components/IntroPanel";
 import MainPanel from "./components/MainPanel";
 import ConclusionPanel from "./components/ConclusionPanel";
 import PostsPanel from "./components/PostsPanel";
-import "./App.css"; // CSS взял из первого задания
+import "./App.css"; // основу для CSS взял из первого задания
 
 function App() {
   return (
