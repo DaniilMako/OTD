@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# 🚀 Task3: React + API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Проект демонстрирует работу с сетью, использование хуков и сравнение методов загрузки данных (`axios` vs `fetch`).
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🛠 Как запустить
 
-### `npm start`
+1. **Установите зависимости**:
+   ```bash
+   npm install
+   ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Запустите приложение**:
+   ```bash
+   npm start
+   ```
+   Приложение будет доступно по адресу [http://localhost:3000](http://localhost:3000).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Тесты** (опционально):
+   ```bash
+   npm test
+   ```
 
-### `npm test`
+4. **Сборка для продакшена**:
+   ```bash
+   npm run build
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📌 Основные возможности
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- ✅ **Навигационная панель**: Переключайтесь между разделами (Введение, Описание, Заключение, Посты).
+- 🌐 **Работа с API**:
+    - Загрузка данных из [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
+    - Поддержка **Axios** и **Fetch** (можно переключать в интерфейсе).
+- 🔁 **Мемоизация данных**: Используется `useMemo` для оптимизации отображения.
+- 🧪 **Динамический интерфейс**: Ползунок для выбора количества отображаемых постов.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📁 Структура проекта
 
-### `npm run eject`
+```
+task3/
+├── node_modules/        # Зависимости (npm packages)
+├── public/              # Статические файлы (index.html, favicon.ico)
+├── src/                 # Исходный код
+│   ├── components/      # Компоненты:
+│   │   ├── ConclusionPanel.js
+│   │   ├── IntroPanel.js
+│   │   ├── MainPanel.js
+│   │   ├── PostsPanel.js
+│   │   └── Sidebar.js
+│   ├── images/          # Изображения (например, logo.svg)
+│   ├── App.css          # Общие стили
+│   ├── App.js           # Главный компонент
+│   ├── index.css        # Глобальные стили
+│   ├── index.js         # Точка входа (рендерит App)
+│   ├── reportWebVitals.js  # Метрики производительности
+│   └── setupTests.js       # Настройка тестов
+├── .gitignore              # Файлы, игнорируемые Git
+├── package.json            # Конфигурация проекта, зависимости
+├── package-lock.json       # Фиксированные версии зависимостей
+└── README.md               # Документация
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🧪 Пример использования
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Откройте [http://localhost:3000](http://localhost:3000).
+2. Перейдите на вкладку **"Посты"**.
+3. Выберите метод загрузки (`Axios` или `Fetch`).
+4. Измените количество отображаемых постов с помощью ползунка.
+5. Посмотрите, как работает мемоизация и обработка ошибок.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 📚 Ссылки
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [React документация](https://reactjs.org/)
+- [Axios GitHub](https://github.com/axios/axios)
+- [JSONPlaceholder API](https://jsonplaceholder.typicode.com/)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## ✅ Что реализовано?
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| Функционал              | Реализовано |
+|-------------------------|-------------|
+| Навигационная панель    | ✅          |
+| Axios + Fetch сравнение | ✅          |
+| Мемоизация данных       | ✅          |
+| Обработка ошибок        | ✅          |
+| Адаптивный интерфейс    | ✅          |
