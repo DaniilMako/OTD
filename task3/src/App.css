@@ -4,7 +4,7 @@ body {
     font-family: 'Segoe UI';
 /*    display: flex; *//* боковая панель и контент в ряд*/
     height: 100vh;
-    width: 100vw;
+    width: 98vw;
 }
 
 ::selection {  /*выделение текста с помощью псевдоэлемента*/
@@ -61,8 +61,9 @@ body {
 .content {
     width: 90%;
     margin-left: 10%;
-    padding-left : 2rem;  /*зазор между основным контентом и боковой панелью*/
-    padding-bottom: 2rem;
+    padding: 2rem;  /*зазор между основным контентом и боковой панелью*/
+/*    padding-right: 2rem;*/
+/*    padding-bottom: 2rem;*/
     /*    padding: 1.5rem;*/
     box-sizing: border-box;  /*учитывает padding*/
 /*    overflow-y: auto;*/
@@ -141,10 +142,110 @@ h2:hover .anchor {  /*при наведении будет отображать�
 .animated-image {
     max-width: 40%;
     height: auto;
-    animation: float 3s infinite ease-in-out 3s;  /*начинается и заканчивается медленно, ускоряясь в середине; второе время - это задержка*/
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+/*    animation: float 3s infinite ease-in-out 3s;  *//*начинается и заканчивается медленно, ускоряясь в середине; второе время - это задержка*/
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animated-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 @keyframes float {  /*директива*/
     0%, 100% { transform: translateY(0); }  /*начало и конец - from и to, где изображение не двигается*/
     50% { transform: translateY(-10px); }  /*в середине изображение поднимается на 10 пикселей вверх*/
 }
+
+/* =======================Стиль для вкладки "Посты"======================== */
+.posts-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.post-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  /*плавная анимация*/
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.post-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.post-body {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Стиль для ползунка */
+.range-slider {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.range-slider input[type="range"] {
+    width: 70%;
+    accent-color: #3498db;
+/*    align-content: center;*/
+/*    margin: 0 auto;  *//*    пользунок по центру*/
+}
+
+.range-slider label {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Стиль для переключателя axios/fetch */
+.method-toggle {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.method-toggle input[type="radio"] {
+    accent-color: #3498db;
+}
+
+/* Стиль для загрузки/ошибки */
+.status-message {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    color: #d9534f;
+}
+
+/* Адаптивность для маленьких экранов */
+/*@media (max-width: 768px) {*/
+/*    .method-toggle {*/
+/*        flex-direction: column;*/
+/*        align-items: flex-start;*/
+/*    }*/
+
+/*    .range-slider {*/
+/*        flex-direction: column;*/
+/*        align-items: flex-start;*/
+/*    }*/
+
+/*    .post-card {*/
+/*        font-size: 0.95rem;*/
+/*    }*/
+/*}*/
