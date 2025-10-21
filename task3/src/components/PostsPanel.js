@@ -11,6 +11,10 @@ const PostsPanel = () => {
   // === Загрузка данных через Axios ===
   const loadWithAxios = useCallback(async () => {
     try {
+      // Сброс данных перед загрузкой
+      setPosts([]);
+      setIsLoading(true);
+
       const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
       setPosts(response.data);
       setIsError(false);
@@ -25,6 +29,10 @@ const PostsPanel = () => {
   // === Загрузка данных через Fetch ===
   const loadWithFetch = useCallback(async () => {
     try {
+      // Сброс данных перед загрузкой
+      setPosts([]);
+      setIsLoading(true);
+
       const response = await fetch("https://jsonplaceholder.typicode.com/posts");
       if (!response.ok) throw new Error("Ошибка сети");
       const data = await response.json();
@@ -53,7 +61,7 @@ const PostsPanel = () => {
   }, [posts, postCount]);
 
   if (isLoading) {
-    return (<section><p className="status-message">Загрузка...</p></section>);
+    return (<section><p className="status-message"><strong>Загрузка...</strong></p></section>);
   }
 
   // === Отрисовка компонента ===
