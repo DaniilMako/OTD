@@ -23,6 +23,10 @@
    ```
 ✅ Сервер будет доступен: [http://localhost:8000](http://localhost:8000)
 
+Или второй вариант:
+```
+python -m uvicorn backend.main:app --reload --port 8000
+```
 ### 4. Запустите React-приложение
    ```bash
    npm start
