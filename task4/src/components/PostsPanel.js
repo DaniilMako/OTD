@@ -1,22 +1,31 @@
+// src/components/PostsPanel.js
 import { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "axios";
+import "../PostsPanel.css"; // используем отдельные стили
 
 const PostsPanel = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [postCount, setPostCount] = useState(10);
-  const [useAxios, setUseAxios] = useState(true); // Режим: axios / fetch
 
-  // === Загрузка данных через Axios ===
+  // Восстанавливаем выбор из localStorage
+  const [useAxios, setUseAxios] = useState(() => {
+    const saved = localStorage.getItem("useAxios");
+    return saved !== null ? saved === "true" : true; // по умолчанию axios
+  });
+
+  // Сохраняем выбор
+  useEffect(() => {
+    localStorage.setItem("useAxios", useAxios);
+  }, [useAxios]);
+
+  // === Загрузка через Axios ===
   const loadWithAxios = useCallback(async () => {
     try {
-      // Сброс данных перед загрузкой
       setPosts([]);
       setIsLoading(true);
-
-      const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
-      
+      const response = await axios.get("http://localhost:8000/posts");
       setPosts(response.data);
       setIsError(false);
     } catch (error) {
@@ -26,16 +35,13 @@ const PostsPanel = () => {
       setIsLoading(false);
     }
   }, []);
-  
-  // === Загрузка данных через Fetch ===
+
+  // === Загрузка через Fetch ===
   const loadWithFetch = useCallback(async () => {
     try {
-      // Сброс данных перед загрузкой
       setPosts([]);
       setIsLoading(true);
-      
-      // const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-      const response = await fetch('http://localhost:8000/posts');
+      const response = await fetch("http://localhost:8000/posts");
       if (!response.ok) throw new Error("Ошибка сети");
       const data = await response.json();
       setPosts(data);
@@ -48,7 +54,7 @@ const PostsPanel = () => {
     }
   }, []);
 
-  // === Выбор метода загрузки ===
+  // === Загрузка при изменении метода ===
   useEffect(() => {
     if (useAxios) {
       loadWithAxios();
@@ -63,36 +69,33 @@ const PostsPanel = () => {
   }, [posts, postCount]);
 
   if (isLoading) {
-    return (<section><p className="status-message"><strong>Загрузка...</strong></p></section>);
+    return <section><p className="status-message"><strong>Загрузка...</strong></p></section>;
   }
 
-  // === Отрисовка компонента ===
+  // === JSX ===
   return (
     <section>
       <h2>Посты<span className="anchor">🧷</span></h2>
 
-      {/* Переключатель между axios и fetch */}
-      <div className="method-toggle">
-        <label>Выбор метода:</label>
-        <label>
-          <input
-            type="radio"
-            checked={useAxios}
-            onChange={() => setUseAxios(true)}
-          />
+      {/* Переключатель метода (стилизован как Google-табы) */}
+      <div className="method-tabs">
+        <button
+          className={`tab ${useAxios ? "active" : ""}`}
+          onClick={() => setUseAxios(true)}
+          aria-pressed={useAxios}
+        >
           Axios
-        </label>
-        <label>
-          <input
-            type="radio"
-            checked={!useAxios}
-            onChange={() => setUseAxios(false)}
-          />
+        </button>
+        <button
+          className={`tab ${!useAxios ? "active" : ""}`}
+          onClick={() => setUseAxios(false)}
+          aria-pressed={!useAxios}
+        >
           Fetch
-        </label>
+        </button>
       </div>
 
-      {/* Контроль количества постов */}
+      {/* Ползунок количества */}
       <div className="range-slider">
         <label>Количество постов:</label>
         <input
@@ -105,11 +108,10 @@ const PostsPanel = () => {
         <span>{postCount}</span>
       </div>
 
-      {/* Состояния загрузки/ошибки */}
-      {isLoading && <p className="status-message">Загрузка...</p>}
+      {/* Статус */}
       {isError && <p className="status-message">❌ Ошибка загрузки данных ❌</p>}
 
-      {/* Отображение постов */}
+      {/* Список постов */}
       <ol className="posts-container">
         {memoizedPosts.map((post) => (
           <li key={post.id} className="post-card">
