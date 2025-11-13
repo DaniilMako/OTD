@@ -26,6 +26,7 @@ const PostsPanel = () => {
       setPosts([]);
       setIsLoading(true);
       const response = await axios.get("http://localhost:8000/posts");
+      // const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
       setPosts(response.data);
       setIsError(false);
     } catch (error) {
@@ -42,6 +43,7 @@ const PostsPanel = () => {
       setPosts([]);
       setIsLoading(true);
       const response = await fetch("http://localhost:8000/posts");
+      // const response = await fetch("https://jsonplaceholder.typicode.com/posts");
       if (!response.ok) throw new Error("Ошибка сети");
       const data = await response.json();
       setPosts(data);

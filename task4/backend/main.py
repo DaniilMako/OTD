@@ -1,29 +1,26 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
-from PIL import Image, ImageOps  # Библиотека для работы с изображениями
+from PIL import Image, ImageOps  # для работы с изображениями
 import io  # Для работы с байтовыми потоками (буферами)
 import requests  # Для HTTP-запросов к внешним API
 from fastapi.middleware.cors import CORSMiddleware  # Для разрешения запросов с React
 
 # Создаём экземпляр приложения FastAPI
-# Теперь у нас есть:
-# - /docs → Swagger UI (интерактивная документация)
-# - /redoc → ReDoc (красивая документация)
-# - /openapi.json → спецификация API
 app = FastAPI()
-
+"""
 # Настраиваем CORS (Cross-Origin Resource Sharing)
 # Позволяет React (на http://localhost:3000) делать запросы к этому серверу
+"""
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # Только с этого адреса можно обращаться
-    allow_credentials=True,                    # Разрешаем куки и авторизацию
     allow_methods=["*"],                       # Разрешаем все методы: GET, POST и т.д.
     allow_headers=["*"],                       # Разрешаем все заголовки
 )
-
+"""
 # Промежуточное ПО (middleware) для разрешения отображения в iframe
 # Нужно, чтобы ReDoc и Swagger UI можно было встроить во вкладку в React
+"""
 @app.middleware("http")
 async def add_csp_header(request, call_next):
     response = await call_next(request)
@@ -35,11 +32,12 @@ async def add_csp_header(request, call_next):
     response.headers["Content-Security-Policy"] = "frame-ancestors 'self' http://localhost:3000;"
     
     return response
-
+"""
 # === ЭНДПОИНТ 1: Получение постов ===
 # Метод: GET
 # Адрес: http://localhost:8000/posts
 # Что делает: запрашивает посты с JSONPlaceholder и возвращает их клиенту
+"""
 @app.get("/posts")
 async def get_posts():
     # Делаем GET-запрос к внешнему API
@@ -47,10 +45,11 @@ async def get_posts():
     # Возвращаем JSON с постами
     return response.json()
 
-# === ЭНДПОИНТ 2: Инвертирование изображения ===
+""" === ЭНДПОИНТ 2: Инвертирование изображения ===
 # Метод: POST
 # Адрес: http://localhost:8000/invert-image
 # Что делает: принимает изображение, инвертирует цвета (как фото-негатив), возвращает как PNG
+"""
 @app.post("/invert-image")
 async def invert_image(file: UploadFile = File(...)):
     """
