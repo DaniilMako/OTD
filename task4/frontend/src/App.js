@@ -1,12 +1,15 @@
+// src/App.js
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
-import IntroPanel from "./components/IntroPanel";
-import MainPanel from "./components/MainPanel";
-import ConclusionPanel from "./components/ConclusionPanel";
-import PostsPanel from "./components/PostsPanel";
-import "./App.css"; // основу для CSS взял из первого задания
-import ImageUpload from "./components/ImageUpload";
-import APIDocumentation from "./components/APIDocumentation";
+
+import Sidebar from "./components/Sidebar/Sidebar";
+import IntroPanel from "./components/IntroPanel/IntroPanel";
+import MainPanel from "./components/MainPanel/MainPanel";
+import ConclusionPanel from "./components/ConclusionPanel/ConclusionPanel";
+import PostsPanel from "./components/PostsPanel/PostsPanel";
+import ImageUpload from "./components/ImageUpload/ImageUpload";
+import APIDocumentation from "./components/APIDocumentation/APIDocumentation";
+
+import "./App.css";
 
 function App() {
   return (

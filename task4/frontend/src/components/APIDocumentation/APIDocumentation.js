@@ -1,7 +1,7 @@
 // src/components/APIDocumentation.js
 import React, { useState, useEffect } from 'react';
-import '../App.css';
-// import './APIDocumentation.css';
+// import '../App.css';
+import './APIDocumentation.css';
 
 const APIDocumentation = () => {
   // Восстанавливаем последнюю вкладку из localStorage
