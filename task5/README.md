@@ -55,7 +55,7 @@ python -m uvicorn backend.main:app --reload --port 8000
 
 
 ```
-task5/
+task4/
 │
 ├── backend/                     # 🆕 (добавлено в задании 4)
 │   ├── main.py                  # FastAPI-сервер: /posts, /invert-image
