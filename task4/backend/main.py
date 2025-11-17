@@ -1,11 +1,10 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
-from PIL import Image, ImageOps  # для работы с изображениями
-import io  # Для работы с байтовыми потоками (буферами)
+from PIL import Image, ImageOps
+import io
 import requests  # Для HTTP-запросов к внешним API
 from fastapi.middleware.cors import CORSMiddleware  # Для разрешения запросов с React
 
-# Создаём экземпляр приложения FastAPI
 app = FastAPI()
 """
 # Настраиваем CORS (Cross-Origin Resource Sharing)
@@ -25,15 +24,9 @@ app.add_middleware(
 async def add_csp_header(request, call_next):
     response = await call_next(request)
     
-    # Разрешаем показывать страницу во frame/iframe (даже с другого домена)
-    response.headers["X-Frame-Options"] = "ALLOWALL"
-    
-    # Более современный способ: разрешаем встраивание с localhost:3000
-    response.headers["Content-Security-Policy"] = "frame-ancestors 'self' http://localhost:3000;"
-    
     return response
-"""
-# === ЭНДПОИНТ 1: Получение постов ===
+
+""" === ЭНДПОИНТ 1: Получение постов ===
 # Метод: GET
 # Адрес: http://localhost:8000/posts
 # Что делает: запрашивает посты с JSONPlaceholder и возвращает их клиенту
