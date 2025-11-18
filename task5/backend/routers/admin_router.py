@@ -1,6 +1,6 @@
 from sqlalchemy import select, insert, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Body
 
 from database import get_async_session
 from models.models import pages, kpi
@@ -68,21 +68,16 @@ async def get_kpis(session: AsyncSession = Depends(get_async_session)):
     ]
 
 
+
 @router.post("/kpi/{page_id}/time")
 async def add_time(
     page_id: int,
-    seconds: int,
+    seconds: int = Body(..., embed=True),  # ← FastAPI поймёт: ожидается JSON: {"seconds": 123}
     session: AsyncSession = Depends(get_async_session)
 ):
-    # Проверим, что страница существует
-    # check = await session.execute(select(pages).where(pages.c.id == page_id))
-    # if not check.first():
-    #     raise HTTPException(status_code=404, detail="Page not found")
-
     stmt = update(kpi).where(kpi.c.page_id == page_id).values(
-        time_spent=kpi.c.time_spent + seconds
+        time_spent = kpi.c.time_spent + seconds
     )
     await session.execute(stmt)
     await session.commit()
-
     return {"status": "success", "added_seconds": seconds}

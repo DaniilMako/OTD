@@ -18,10 +18,10 @@ function AppContent() {
   const location = useLocation();
 
   const PAGE_ID_MAP = {
-    "/intro": 5,
-    "/main": 6,
-    "/conclusion": 7,
-    "/api": 8,
+    "/intro": 1,
+    "/main": 2,
+    "/conclusion": 3,
+    "/api": 4,
   };
 
   useEffect(() => {
