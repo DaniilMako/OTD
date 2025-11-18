@@ -8,7 +8,7 @@ import MainPanel from "./components/MainPanel/MainPanel";
 import ConclusionPanel from "./components/ConclusionPanel/ConclusionPanel";
 import PostsPanel from "./components/PostsPanel/PostsPanel";
 import Sidebar from "./components/Sidebar/Sidebar";
-import StatsPage from "./components/StatsPage/StatsPage";
+import StatsPanel from "./components/StatsPanel/StatsPanel";
 
 import "./App.css";
 import { useEffect } from "react";
@@ -58,7 +58,7 @@ function AppContent() {
           <Route path="/posts"      element={<PostsPanel />} />
           <Route path="/image"      element={<ImageUpload />} />
           <Route path="/api"        element={<APIDocumentation />} />
-          <Route path="/stats"      element={<StatsPage />} />
+          <Route path="/stats"      element={<StatsPanel />} />
         </Routes>
       </main>
     </>

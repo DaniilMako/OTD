@@ -1,7 +1,9 @@
 const ConclusionPanel = () => {
   return (
     <section id="conclusion">
-      <h2>Заключение<span class="anchor">🧷</span></h2>
+      <div className="main-header">
+        <h2>Заключение<span class="anchor">🧷</span></h2>
+      </div>
       <p>Сравнение русского и эвенского</p>
 
       {/* Списки */}

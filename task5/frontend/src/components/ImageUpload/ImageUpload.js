@@ -46,7 +46,7 @@ const ImageUpload = () => {
 
   return (
     <div className="image-upload-container">
-      <div className="image-upload-header">
+      <div className="main-header">
         <h2>Инвертирование изображения</h2>
         <p>Выберите или перенестите изображение на белое поле и инвертируйте его цвета</p>
       </div>

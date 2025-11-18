@@ -77,8 +77,9 @@ const PostsPanel = () => {
   // === JSX ===
   return (
     <section>
-      <h2>Посты<span className="anchor">🧷</span></h2>
-
+      <div className="main-header">
+        <h2>Посты<span className="anchor">🧷</span></h2>
+      </div>
       {/* Переключатель метода (стилизован как Google-табы) */}
       <div className="method-tabs">
         <button

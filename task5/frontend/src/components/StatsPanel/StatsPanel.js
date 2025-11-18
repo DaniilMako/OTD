@@ -10,7 +10,7 @@ export default function StatsPage() {
   }, []);
 
   return (
-    <div>
+      <div className="main-header">
       <h2>Статистика</h2>
       <table>
         <thead>

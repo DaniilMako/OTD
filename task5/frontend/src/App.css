@@ -124,6 +124,17 @@ h2:hover .anchor {  /*при наведении будет отображать�
     opacity: 1;
 }
 
+.main-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.main-header h2 {
+  font-size: 1.8rem;
+  color: #1a73e8;
+  margin: 0;
+}
+
 /* Стиль для блочного элемента */
 .box {
     border: 1px solid #ccc;
