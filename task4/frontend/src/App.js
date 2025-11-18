@@ -1,13 +1,13 @@
 // src/App.js
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-import Sidebar from "./components/Sidebar/Sidebar";
+import APIDocumentation from "./components/APIDocumentation/APIDocumentation";
+import ImageUpload from "./components/ImageUpload/ImageUpload";
 import IntroPanel from "./components/IntroPanel/IntroPanel";
 import MainPanel from "./components/MainPanel/MainPanel";
 import ConclusionPanel from "./components/ConclusionPanel/ConclusionPanel";
 import PostsPanel from "./components/PostsPanel/PostsPanel";
-import ImageUpload from "./components/ImageUpload/ImageUpload";
-import APIDocumentation from "./components/APIDocumentation/APIDocumentation";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 import "./App.css";
 
