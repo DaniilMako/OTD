@@ -1,0 +1,21 @@
+# models/models.py
+from sqlalchemy import MetaData, Column, Integer, String, ForeignKey, Table
+
+metadata = MetaData()
+
+pages = Table(
+    "pages",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("title", String, default=""),
+    Column("content", String, default=""),
+)
+
+kpi = Table(
+    "kpi",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("page_id", Integer, ForeignKey("pages.id")),
+    Column("counter", Integer, default=0),
+    Column("time_spent", Integer, default=0),
+)

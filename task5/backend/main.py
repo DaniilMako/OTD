@@ -5,8 +5,12 @@ import io  # Для работы с байтовыми потоками (буф�
 import requests  # Для HTTP-запросов к внешним API
 from fastapi.middleware.cors import CORSMiddleware  # Для разрешения запросов с React
 
+from routers.admin_router import router
 # Создаём экземпляр приложения FastAPI
 app = FastAPI()
+
+app.include_router(router)
+
 """
 # Настраиваем CORS (Cross-Origin Resource Sharing)
 # Позволяет React (на http://localhost:3000) делать запросы к этому серверу
