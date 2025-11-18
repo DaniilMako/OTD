@@ -1,6 +1,6 @@
 // src/components/ImageUpload.js
 import React, { useState } from 'react';
-import '../ImageUpload.css';
+import './ImageUpload.css';
 
 const ImageUpload = () => {
   const [file, setFile] = useState(null);
@@ -13,7 +13,7 @@ const ImageUpload = () => {
     if (selectedFile) {
       setFile(selectedFile);
       setOriginalImage(URL.createObjectURL(selectedFile));
-      setInvertedImage(''); // сброс результата
+      setInvertedImage('');
     }
   };
 
@@ -54,6 +54,7 @@ const ImageUpload = () => {
       {/* Контролы */}
       <div className="upload-controls">
         <input
+          className="input-button"
           type="file"
           accept="image/*"
           onChange={handleFileChange}

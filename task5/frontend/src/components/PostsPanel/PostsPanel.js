@@ -1,7 +1,7 @@
 // src/components/PostsPanel.js
 import { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "axios";
-import "../PostsPanel.css"; // используем отдельные стили
+import "./PostsPanel.css";
 
 const PostsPanel = () => {
   const [posts, setPosts] = useState([]);
