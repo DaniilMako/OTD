@@ -49,7 +49,7 @@ uvicorn backend.main:app --reload --port 8000
 ✅ Сервер будет доступен: [http://localhost:8000](http://localhost:8000)
 
 Или второй вариант:
-```
+```bash
 python -m uvicorn backend.main:app --reload --port 8000
 ```
 
