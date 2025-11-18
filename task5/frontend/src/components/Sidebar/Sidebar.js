@@ -36,6 +36,11 @@ const Sidebar = () => {
               🌐<br/>API
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/stats" className={({ isActive }) => (isActive ? "active" : "")}>
+              📊<br/>Статистика
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </aside>
