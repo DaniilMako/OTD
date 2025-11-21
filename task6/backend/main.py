@@ -89,3 +89,24 @@ async def invert_image(file: UploadFile = File(...)):
     
     # Возвращаем изображение как поток (StreamingResponse)
     return StreamingResponse(buf, media_type="image/png")
+
+# @app.on_event("startup")
+# async def startup_event():
+#     async with engine.begin() as conn:
+#         # Создаём все таблицы, если ещё не созданы
+#         await conn.run_sync(metadata.create_all)
+
+#     # Добавляем роли, если их нет
+#     async with engine.connect() as conn:
+#         for role_name in ['user', 'admin']:
+#             result = await conn.execute(
+#                 "SELECT 1 FROM roles WHERE name = :name",
+#                 {"name": role_name}
+#             )
+#             if not result.first():
+#                 await conn.execute(
+#                     "INSERT INTO roles (name) VALUES (:name)",
+#                     {"name": role_name}
+#                 )
+#                 await conn.commit()
+#                 print(f"✅ Добавлена роль: {role_name}")
