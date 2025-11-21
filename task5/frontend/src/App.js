@@ -13,16 +13,17 @@ import StatsPanel from "./components/StatsPanel/StatsPanel";
 import "./App.css";
 import { useEffect } from "react";
 
+
+const PAGE_ID_MAP = {
+  "/intro": 1,
+  "/main": 2,
+  "/conclusion": 3,
+  "/api": 4,
+};
+
 // Обёртка для использования хуков внутри Router
 function AppContent() {
   const location = useLocation();
-
-  const PAGE_ID_MAP = {
-    "/intro": 1,
-    "/main": 2,
-    "/conclusion": 3,
-    "/api": 4,
-  };
 
   useEffect(() => {
     const pageId = PAGE_ID_MAP[location.pathname];
