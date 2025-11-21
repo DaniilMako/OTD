@@ -21,6 +21,8 @@ npm install
 ### 2. Установите сервер (Python)
 ```bash
 cd ../backend
+python -m venv .venv
+venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
@@ -31,12 +33,13 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=otd
 DB_USER=postgres
-DB_PASS=your_password
+DB_PASS=admin
 ```
 🔐 Убедитесь, что PostgreSQL запущен и база otd создана.
 
 ### 4. Примените миграции
 ```bash
+alembic revision --autogenerate
 alembic upgrade head
 ```
 ✅ Создаст таблицы pages и kpi
@@ -44,7 +47,8 @@ alembic upgrade head
 
 ### 5. Запустите сервер (в отдельном терминале)
 ```bash
-uvicorn backend.main:app --reload --port 8000
+cd backend
+uvicorn main:app --reload --port 8000
 ```
 ✅ Сервер будет доступен: [http://localhost:8000](http://localhost:8000)
 

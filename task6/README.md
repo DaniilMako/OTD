@@ -31,7 +31,7 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=otd
 DB_USER=postgres
-DB_PASS=your_password
+DB_PASS=admin
 ```
 🔐 Убедитесь, что PostgreSQL запущен и база otd создана.
 
