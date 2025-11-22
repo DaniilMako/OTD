@@ -1,10 +1,8 @@
 // src/components/Sidebar/Sidebar.js
 import { NavLink } from "react-router-dom";
-import UserPanel from "../UserPanel/UserPanel";
 import "./Sidebar.css";
 
-// Sidebar.js
-const Sidebar = ({ isAuthenticated, role, onLogout }) => {
+const Sidebar = ({ isAuthenticated, role }) => {
   return (
     <aside className="sidebar">
       <nav>
@@ -30,13 +28,17 @@ const Sidebar = ({ isAuthenticated, role, onLogout }) => {
             </>
           )}
 
-          {/* Панель пользователя */}
-          <UserPanel isAuthenticated={isAuthenticated} onLogout={onLogout} />
+          {/* Профиль — как обычный пункт */}
+          <li>
+            <NavLink to="/profile">
+              👤<br />
+              {isAuthenticated ? "Профиль" : "Войти"}
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </aside>
   );
 };
-
 
 export default Sidebar;

@@ -9,8 +9,10 @@ import ConclusionPanel from "./components/ConclusionPanel/ConclusionPanel";
 import PostsPanel from "./components/PostsPanel/PostsPanel";
 import Sidebar from "./components/Sidebar/Sidebar";
 import StatsPanel from "./components/StatsPanel/StatsPanel";
-import LoginPage from "./components/LoginPage";
-import RegisterPage from "./components/RegisterPage";
+import LoginPage from "./components/Auth/LoginPage";
+import RegisterPage from "./components/Auth/RegisterPage";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
+
 
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -150,6 +152,7 @@ function AppContent() {
           <Route path="/conclusion" element={<ConclusionPanel />} />
           <Route path="/posts" element={<PostsPanel />} />
           <Route path="/image" element={<ImageUpload />} />
+          {isAuthenticated && <Route path="/profile" element={<ProfilePage />} />}
 
           {/* Только для админов */}
           {role === "admin" && <Route path="/api" element={<APIDocumentation />} />}
