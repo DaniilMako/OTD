@@ -1,62 +1,56 @@
 // src/components/Sidebar/Sidebar.js
 import { NavLink } from "react-router-dom";
-import UserPanel from "../UserPanel/UserPanel"; // ← импортируем из папки
+import UserPanel from "../UserPanel/UserPanel";
 import "./Sidebar.css";
 
-const Sidebar = ({ showStats = false, isAuthenticated, onLogout }) => {
+// Sidebar.js
+const Sidebar = ({ showStats = false, isAuthenticated, role, onLogout }) => {
   return (
     <aside className="sidebar">
       <nav>
         <ul>
+          {/* Публичные страницы */}
           <li>
-            <NavLink to="/intro" className={({ isActive }) => (isActive ? "active" : "")}>
-              🚩<br />Введение
-            </NavLink>
+            <NavLink to="/intro">🚩<br />Введение</NavLink>
           </li>
           <li>
-            <NavLink to="/main" className={({ isActive }) => (isActive ? "active" : "")}>
-              📛<br />Описание
-            </NavLink>
+            <NavLink to="/main">📛<br />Описание</NavLink>
           </li>
           <li>
-            <NavLink to="/conclusion" className={({ isActive }) => (isActive ? "active" : "")}>
-              🏁<br />Заключение
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/posts" className={({ isActive }) => (isActive ? "active" : "")}>
-              📒<br />Посты
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/image" className={({ isActive }) => (isActive ? "active" : "")}>
-              🖼️<br />Загрузка изображений
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/api" className={({ isActive }) => (isActive ? "active" : "")}>
-              🌐<br />API
-            </NavLink>
+            <NavLink to="/conclusion">🏁<br />Заключение</NavLink>
           </li>
 
-          {/* Условное отображение статистики */}
-          {showStats && (
-            <li>
-              <NavLink to="/stats" className={({ isActive }) => (isActive ? "active" : "")}>
-                📊<br />Статистика
-              </NavLink>
-            </li>
+          {/* Только для авторизованных */}
+          {isAuthenticated && (
+            <>
+              <li>
+                <NavLink to="/posts">📒<br />Посты</NavLink>
+              </li>
+              <li>
+                <NavLink to="/image">🖼️<br />Загрузка</NavLink>
+              </li>
+            </>
+          )}
+
+          {/* Только для админа */}
+          {role === "admin" && (
+            <>
+              <li>
+                <NavLink to="/api">🌐<br />API</NavLink>
+              </li>
+              <li>
+                <NavLink to="/stats">📊<br />Статистика</NavLink>
+              </li>
+            </>
           )}
 
           {/* Панель пользователя */}
-          <UserPanel
-            isAuthenticated={isAuthenticated}
-            onLogout={onLogout}
-          />
+          <UserPanel isAuthenticated={isAuthenticated} onLogout={onLogout} />
         </ul>
       </nav>
     </aside>
   );
 };
+
 
 export default Sidebar;

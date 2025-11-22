@@ -14,6 +14,8 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 async def create_page(page: Page, session: AsyncSession = Depends(get_async_session)):
     # Явно указываем RETURNING id
     stmt = insert(pages).values(title=page.title, content=page.content).returning(pages.c.id)
+    # stmt = update(kpi).where(kpi.c.page_id == page.id).values(counter=kpi.c.counter + 1)
+
     result = await session.execute(stmt)
     row = result.first()
     
@@ -82,3 +84,28 @@ async def add_time(
     await session.execute(stmt)
     await session.commit()
     return {"status": "success", "added_seconds": seconds}
+
+
+@router.get("/page/by-path/{path}")
+async def get_page_by_path(path: str, session: AsyncSession = Depends(get_async_session)):
+    # Восстанавливаем путь с начальным слешом
+    full_path = f"/{path}"
+    print(f"Searching for full_path: '{full_path}'")
+
+    result = await session.execute(
+        select(pages.c.id, pages.c.title, pages.c.content)
+        .where(pages.c.path == full_path)
+    )
+    page = result.first()
+    print("Found:", page)
+
+    if not page:
+        raise HTTPException(status_code=404, detail="Page not found")
+
+    stmt = update(kpi).where(kpi.c.page_id == page.id).values(counter=kpi.c.counter + 1)
+    await session.execute(stmt)
+    await session.commit()
+
+    return {"id": page.id, "title": page.title, "content": page.content}
+
+

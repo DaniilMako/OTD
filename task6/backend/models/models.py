@@ -9,6 +9,7 @@ pages = Table(
     Column("id", Integer, primary_key=True),
     Column("title", String, default=""),
     Column("content", String, default=""),
+    Column("path", String, unique=True, nullable=False),
 )
 
 kpi = Table(
