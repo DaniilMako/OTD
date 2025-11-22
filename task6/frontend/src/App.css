@@ -185,59 +185,59 @@ h2:hover .anchor {  /*при наведении будет отображать�
     border-radius: 8px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;  /*плавная анимация*/
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.post-card:hover {
+/* .post-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
+} */
 
-.post-title {
+/* .post-title {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
     color: #333;
-}
+} */
 
-.post-body {
+/* .post-body {
     font-size: 1rem;
     color: #555;
     line-height: 1.5;
-}
+} */
 
 /* Стиль для ползунка */
-.range-slider {
+/* .range-slider {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin-top: 1rem;
-}
+} */
 
-.range-slider input[type="range"] {
+/* .range-slider input[type="range"] {
     width: 70%;
-    accent-color: #3498db;
+    accent-color: #3498db; */
 /*    align-content: center;*/
 /*    margin: 0 auto;  *//*    пользунок по центру*/
-}
+/* } */
 
-.range-slider label {
+/* .range-slider label {
     font-size: 0.9rem;
     color: #777;
-}
+} */
 
 /* Стиль для переключателя axios/fetch */
-.method-toggle {
+/* .method-toggle {
     margin-top: 1rem;
     display: flex;
     align-items: center;
     gap: 1rem;
     font-size: 0.95rem;
     color: #555;
-}
+} */
 
-.method-toggle input[type="radio"] {
+/* .method-toggle input[type="radio"] {
     accent-color: #3498db;
-}
+} */
 
 /* Стиль для загрузки/ошибки */
 .status-message {
@@ -264,22 +264,22 @@ h2:hover .anchor {  /*при наведении будет отображать�
 /*    }*/
 /*}*/
 
-.api-container {
+/* .api-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+} */
 
-.api-tabs {
+/* .api-tabs {
   display: flex;
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 10;
-}
+} */
 
-.tab {
+/* .tab {
   padding: 14px 20px;
   border: none;
   background: transparent;
@@ -291,18 +291,18 @@ h2:hover .anchor {  /*при наведении будет отображать�
   align-items: center;
   transition: color 0.2s ease;
   position: relative;
-}
+} */
 
-.tab:hover {
+/* .tab:hover {
   color: #202124;
-}
+} */
 
-.tab.active {
+/* .tab.active {
   color: #1a73e8;
-}
+} */
 
 /* Подчёркивание как в Google */
-.tab::after {
+/* .tab::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -311,40 +311,24 @@ h2:hover .anchor {  /*при наведении будет отображать�
   height: 2px;
   background: #1a73e8;
   transition: width 0.3s ease, background 0.2s ease;
-}
+} */
 
-.tab.active::after {
+/* .tab.active::after {
   width: 100%;
-}
+} */
 
-.tab:hover::after {
+/* .tab:hover::after {
   background: #4285f4;
-}
+} */
 
-.api-content {
+/* .api-content {
   flex: 1;
   background: #f9f9f9;
-}
+} */
 
-.api-frame {
+/* .api-frame {
   width: 100%;
   height: 100%;
   border: none;
   background: white;
-}
-
-
-.app-loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #f0f0f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #333;
-  z-index: 1000;
-}
+} */
