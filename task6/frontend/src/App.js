@@ -18,8 +18,10 @@ import { useEffect, useState } from "react";
 
 function AppContent() {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [role, setRole] = useState(null);
+  const [trackedPaths, setTrackedPaths] = useState([]);
+
 
   // Проверка токена при загрузке и смене маршрута
   useEffect(() => {
@@ -46,44 +48,57 @@ function AppContent() {
     setRole(null);
   };
 
-  // Логика KPI: счётчик посещений и времени
+  // Загрузка путей
   useEffect(() => {
     if (!isAuthenticated) return;
 
+    const token = localStorage.getItem("token");
+    fetch("http://localhost:8000/admin/pages/paths", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch paths");
+        return res.json();
+      })
+      .then((data) => {
+        // ✅ Гарантируем, что paths — массив
+        const paths = Array.isArray(data.paths) ? data.paths : [];
+        setTrackedPaths(paths);
+      })
+      .catch((err) => {
+        console.error("Failed to load tracked paths:", err);
+        setTrackedPaths([]); // ← fallback
+      });
+  }, [isAuthenticated]);
+
+
+  // KPI
+  useEffect(() => {
+    if (!isAuthenticated || !Array.isArray(trackedPaths) || trackedPaths.length === 0) return;
+
     const path = location.pathname;
-    const allowedPaths = ["/intro", "/main", "/conclusion", "/api"];
-    if (!allowedPaths.includes(path)) return;
+    if (!trackedPaths.includes(path)) return; // ← проверяем динамически
 
     const token = localStorage.getItem("token");
     let start = performance.now();
     let pageId = null;
 
-    // Запрашиваем данные страницы → получаем pageId и увеличиваем счётчик
     fetch(`http://localhost:8000/admin/page/by-path${path}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to load page");
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
         pageId = data.id;
       })
-      .catch((err) => {
-        console.error("KPI fetch error:", err);
-      });
+      .catch(console.error);
 
-    // Функция отправки времени
     const sendTime = (seconds) => {
       if (!pageId || seconds <= 0) return;
-
-      // Попытка через sendBeacon (для F5 и закрытия вкладки)
       if (window.navigator.sendBeacon) {
         const body = JSON.stringify({ seconds });
         const blob = new Blob([body], { type: "application/json" });
         navigator.sendBeacon(`http://localhost:8000/admin/kpi/${pageId}/time`, blob);
       } else {
-        // Резерв: обычный fetch (работает при навигации)
         fetch(`http://localhost:8000/admin/kpi/${pageId}/time`, {
           method: "POST",
           headers: {
@@ -95,7 +110,6 @@ function AppContent() {
       }
     };
 
-    // При закрытии вкладки или F5
     const handleBeforeUnload = () => {
       const end = performance.now();
       const seconds = Math.round((end - start) / 1000);
@@ -104,14 +118,13 @@ function AppContent() {
 
     window.addEventListener("beforeunload", handleBeforeUnload);
 
-    // При навигации (очистка эффекта)
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       const end = performance.now();
       const seconds = Math.round((end - start) / 1000);
       sendTime(seconds);
     };
-  }, [location.pathname, isAuthenticated]);
+  }, [location.pathname, isAuthenticated, trackedPaths]);
 
   // Редирект на /login, если неавторизован
   if (!isAuthenticated && !["/login", "/register"].includes(location.pathname)) {
@@ -122,7 +135,6 @@ function AppContent() {
     <>
       {isAuthenticated && (
         <Sidebar
-          showStats={role === "admin"}
           isAuthenticated={isAuthenticated}
           role={role}
           onLogout={handleLogout}
@@ -142,6 +154,7 @@ function AppContent() {
           {/* Только для админов */}
           {role === "admin" && <Route path="/api" element={<APIDocumentation />} />}
           {role === "admin" && <Route path="/stats" element={<StatsPanel />} />}
+
         </Routes>
       </main>
     </>

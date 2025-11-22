@@ -4,43 +4,29 @@ import UserPanel from "../UserPanel/UserPanel";
 import "./Sidebar.css";
 
 // Sidebar.js
-const Sidebar = ({ showStats = false, isAuthenticated, role, onLogout }) => {
+const Sidebar = ({ isAuthenticated, role, onLogout }) => {
   return (
     <aside className="sidebar">
       <nav>
         <ul>
           {/* Публичные страницы */}
-          <li>
-            <NavLink to="/intro">🚩<br />Введение</NavLink>
-          </li>
-          <li>
-            <NavLink to="/main">📛<br />Описание</NavLink>
-          </li>
-          <li>
-            <NavLink to="/conclusion">🏁<br />Заключение</NavLink>
-          </li>
+          <li><NavLink to="/intro">🚩<br />Введение</NavLink></li>
+          <li><NavLink to="/main">📛<br />Описание</NavLink></li>
+          <li><NavLink to="/conclusion">🏁<br />Заключение</NavLink></li>
 
           {/* Только для авторизованных */}
           {isAuthenticated && (
             <>
-              <li>
-                <NavLink to="/posts">📒<br />Посты</NavLink>
-              </li>
-              <li>
-                <NavLink to="/image">🖼️<br />Загрузка</NavLink>
-              </li>
+              <li><NavLink to="/posts">📒<br />Посты</NavLink></li>
+              <li><NavLink to="/image">🖼️<br />Инвертировать изображение</NavLink></li>
             </>
           )}
 
           {/* Только для админа */}
           {role === "admin" && (
             <>
-              <li>
-                <NavLink to="/api">🌐<br />API</NavLink>
-              </li>
-              <li>
-                <NavLink to="/stats">📊<br />Статистика</NavLink>
-              </li>
+              <li><NavLink to="/api">🌐<br />API</NavLink></li>
+              <li><NavLink to="/stats">📊<br />Статистика</NavLink></li>
             </>
           )}
 
