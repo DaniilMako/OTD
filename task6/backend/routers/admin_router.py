@@ -12,9 +12,11 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 
 @router.post("/create_page")
 async def create_page(page: Page, session: AsyncSession = Depends(get_async_session)):
-    # Явно указываем RETURNING id
-    stmt = insert(pages).values(title=page.title, content=page.content).returning(pages.c.id)
-    # stmt = update(kpi).where(kpi.c.page_id == page.id).values(counter=kpi.c.counter + 1)
+    stmt = insert(pages).values(
+        title=page.title,
+        content=page.content,
+        path=page.path
+    ).returning(pages.c.id)
 
     result = await session.execute(stmt)
     row = result.first()
@@ -22,34 +24,14 @@ async def create_page(page: Page, session: AsyncSession = Depends(get_async_sess
     if not row:
         raise HTTPException(status_code=500, detail="Failed to create page")
 
-    page_id = row.id  # получаем ID
+    page_id = row.id
 
-    # Создаём запись в kpi
     kpi_stmt = insert(kpi).values(page_id=page_id, counter=0, time_spent=0)
     await session.execute(kpi_stmt)
 
     await session.commit()
 
-    return {"status": "created", "page_id": page_id, "title": page.title}
-
-
-
-@router.get("/pages/{page_id}", response_model=Page)
-async def get_page(page_id: int, session: AsyncSession = Depends(get_async_session)):
-    # Увеличиваем счётчик
-    stmt = update(kpi).where(kpi.c.page_id == page_id).values(counter=kpi.c.counter + 1)
-    await session.execute(stmt)
-    await session.commit()
-
-    # Получаем саму страницу
-    result = await session.execute(select(pages).where(pages.c.id == page_id))
-    row = result.first()
-
-    if not row:
-        return Page(title="", content="")
-
-    return Page(title=row.title, content=row.content)
-
+    return {"status": "created", "page_id": page_id, "title": page.title, "path": page.path}
 
 
 @router.get("/kpis", dependencies=[Depends(admin_only)])
@@ -109,3 +91,39 @@ async def get_page_by_path(path: str, session: AsyncSession = Depends(get_async_
     return {"id": page.id, "title": page.title, "content": page.content}
 
 
+@router.get("/pages/paths")
+async def get_tracked_paths(session: AsyncSession = Depends(get_async_session)):
+    result = await session.execute(select(pages.c.path))
+    rows = result.fetchall()
+    paths = [row.path for row in rows] if rows else []
+    return {"paths": paths}
+
+
+@router.delete("/page/by-path/{path}")
+async def delete_page_by_path(
+    path: str,
+    session: AsyncSession = Depends(get_async_session)
+):
+    full_path = f"{path}"
+
+    result = await session.execute(
+        select(pages.c.id).where(pages.c.path == full_path)
+    )
+    row = result.first()
+    if not row:
+        raise HTTPException(status_code=404, detail="Page not found")
+
+    page_id = row.id
+
+    # Удаляем kpi
+    await session.execute(
+        kpi.delete().where(kpi.c.page_id == page_id)
+    )
+    # Удаляем страницу
+    await session.execute(
+        pages.delete().where(pages.c.id == page_id)
+    )
+
+    await session.commit()
+
+    return {"status": "deleted", "path": full_path}
