@@ -43,7 +43,9 @@ export default function RegisterPage() {
           required
         />
         <button type="submit">Зарегистрироваться</button>
-        <p>
+
+        {/* Ссылка на вход */}
+        <p style={{ marginTop: "15px" }}>
           Есть аккаунт? <Link to="/login">Войти</Link>
         </p>
       </form>
