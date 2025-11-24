@@ -58,18 +58,14 @@ function AppContent() {
     fetch("http://localhost:8000/admin/pages/paths", {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch paths");
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        // ✅ Гарантируем, что paths — массив
         const paths = Array.isArray(data.paths) ? data.paths : [];
         setTrackedPaths(paths);
       })
       .catch((err) => {
         console.error("Failed to load tracked paths:", err);
-        setTrackedPaths([]); // ← fallback
+        setTrackedPaths([]);
       });
   }, [isAuthenticated]);
 
@@ -133,15 +129,18 @@ function AppContent() {
     return <Navigate to="/login" replace />;
   }
 
+  // Страницы без сайдбара
+  const noSidebar = ["/login", "/register"].includes(location.pathname);
+
   return (
-    <>
-      {isAuthenticated && (
-        <Sidebar
-          isAuthenticated={isAuthenticated}
-          role={role}
-          onLogout={handleLogout}
-        />
+    // ✅ Единый flex-контейнер
+    <div className="app-container">
+      {/* Сайдбар — только если нужен */}
+      {!noSidebar && isAuthenticated && (
+        <Sidebar isAuthenticated={isAuthenticated} role={role} onLogout={handleLogout} />
       )}
+
+      {/* Основной контент — всегда */}
       <main className="content">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
@@ -153,14 +152,11 @@ function AppContent() {
           <Route path="/posts" element={<PostsPanel />} />
           <Route path="/image" element={<ImageUpload />} />
           {isAuthenticated && <Route path="/profile" element={<ProfilePage />} />}
-
-          {/* Только для админов */}
           {role === "admin" && <Route path="/api" element={<APIDocumentation />} />}
           {role === "admin" && <Route path="/stats" element={<StatsPanel />} />}
-
         </Routes>
       </main>
-    </>
+    </div>
   );
 }
 
