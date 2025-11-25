@@ -51,6 +51,7 @@ DB_PASS=admin
 
 ### 5. Примените миграции
 ```bash
+alembic revision --autogenerate -m "create tables"
 alembic upgrade head
 ```
 ✅ Создаст таблицы pages и kpi
