@@ -37,7 +37,7 @@ async def create_page(page: Page, session: AsyncSession = Depends(get_async_sess
 @router.get("/kpis", dependencies=[Depends(admin_only)])
 async def get_kpis(session: AsyncSession = Depends(get_async_session)):
     result = await session.execute(
-        select(kpi.c.page_id, kpi.c.counter, kpi.c.time_spent, pages.c.title)
+        select(kpi.c.page_id, kpi.c.counter, kpi.c.time_spent, pages.c.title, pages.c.path)
         .join(pages, kpi.c.page_id == pages.c.id)
     )
     rows = result.all()
@@ -48,10 +48,12 @@ async def get_kpis(session: AsyncSession = Depends(get_async_session)):
             "title": row.title,
             "visits": row.counter,
             "time_spent_sec": row.time_spent,
-            "time_spent": f"{row.time_spent // 60} мин {row.time_spent % 60} сек"
+            "time_spent": f"{row.time_spent // 60} мин {row.time_spent % 60} сек",
+            "path": row.path
         }
         for row in rows
     ]
+
 
 
 @router.post("/kpi/{page_id}/time")
@@ -104,7 +106,9 @@ async def delete_page_by_path(
     path: str,
     session: AsyncSession = Depends(get_async_session)
 ):
-    full_path = f"{path}"
+    # Всегда добавляем начальный слеш
+    full_path = f"/{path.lstrip('/')}"  # Убираем лишние слеши и добавляем один
+    print(f"Trying to delete page with path: '{full_path}'")
 
     result = await session.execute(
         select(pages.c.id).where(pages.c.path == full_path)

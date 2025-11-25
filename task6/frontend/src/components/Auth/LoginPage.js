@@ -1,8 +1,7 @@
-// src/components/LoginPage.js
+// src/components/Auth/LoginPage.js
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Auth.css";
-
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -32,7 +31,8 @@ export default function LoginPage() {
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
+          placeholder="Логин"       // ← изменили с "Email"
+          type="text"               // ✅ явно указали
           required
         />
         <input
@@ -44,7 +44,6 @@ export default function LoginPage() {
         />
         <button type="submit">Войти</button>
 
-        {/* Ссылка на регистрацию */}
         <p style={{ marginTop: "15px" }}>
           Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
         </p>
