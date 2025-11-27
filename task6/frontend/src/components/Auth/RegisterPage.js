@@ -30,8 +30,8 @@ export default function RegisterPage() {
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Логин"       // ← улучшили текст
-          type="text"               // ✅ Заменено: email → text
+          placeholder="Логин"       
+          type="text"               
           required
         />
         <input

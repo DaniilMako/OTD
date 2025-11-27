@@ -31,19 +31,37 @@ function AppContent() {
     setIsAuthenticated(!!token);
 
     if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Декод JWT
-        setRole(payload.role);
-      } catch (e) {
-        console.error("Invalid token", e);
-        localStorage.removeItem("token");
-        setIsAuthenticated(false);
-        setRole(null);
-      }
+      fetch("http://localhost:8000/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            // Токен невалиден
+            localStorage.removeItem("token");
+            setIsAuthenticated(false);
+            setRole(null);
+            return null;
+          }
+          return res.json();
+        })
+        .then((data) => {
+          if (data) {
+            setRole(data.role); // роль из БД
+          } else {
+            setRole(null);
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to fetch user profile:", err);
+          setRole(null);
+        });
     } else {
       setRole(null);
     }
   }, [location]);
+
 
   const handleLogout = () => {
     setIsAuthenticated(false);
@@ -75,7 +93,7 @@ function AppContent() {
     if (!isAuthenticated || !Array.isArray(trackedPaths) || trackedPaths.length === 0) return;
 
     const path = location.pathname;
-    if (!trackedPaths.includes(path)) return; // ← проверяем динамически
+    if (!trackedPaths.includes(path)) return; // проверяем динамически
 
     const token = localStorage.getItem("token");
     let start = performance.now();
@@ -133,11 +151,13 @@ function AppContent() {
   const noSidebar = ["/login", "/register"].includes(location.pathname);
 
   return (
-    // ✅ Единый flex-контейнер
     <div className="app-container">
       {/* Сайдбар — только если нужен */}
       {!noSidebar && isAuthenticated && (
-        <Sidebar isAuthenticated={isAuthenticated} role={role} onLogout={handleLogout} />
+        <Sidebar 
+        isAuthenticated={isAuthenticated} 
+        role={role} 
+        onLogout={handleLogout} />
       )}
 
       {/* Основной контент — всегда */}
