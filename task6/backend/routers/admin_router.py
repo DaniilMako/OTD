@@ -1,11 +1,17 @@
 from sqlalchemy import select, insert, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import APIRouter, Depends, HTTPException, Body
+from fastapi import APIRouter, Depends, HTTPException, Body, Response
+from fastapi import UploadFile, File, Form
+import pandas as pd
+from io import BytesIO
 
 from database import get_async_session
-from models.models import pages, kpi
+from models.models import pages, kpi, users, roles
 from schemas.schemas import Page
 from dependencies import admin_only
+import json
+from datetime import datetime
+
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -131,3 +137,71 @@ async def delete_page_by_path(
     await session.commit()
 
     return {"status": "deleted", "path": full_path}
+
+
+@router.get("/export-db", dependencies=[Depends(admin_only)])
+async def export_db(session: AsyncSession = Depends(get_async_session)):
+    """
+    Экспорт всех данных из таблиц `pages` и `kpi` в JSON.
+    Админ может скачать резервную копию.
+    """
+    # Получаем все страницы
+    pages_result = await session.execute(select(pages))
+    pages_data = [row._asdict() for row in pages_result.all()]
+
+    # Получаем все KPI
+    kpi_result = await session.execute(select(kpi))
+    kpi_data = [row._asdict() for row in kpi_result.all()]
+
+    # Формируем JSON
+    export_data = {
+        "pages": pages_data,
+        "kpi": kpi_data,
+        "_meta": {
+            "exported_at": datetime.utcnow().isoformat(),
+            "total_pages": len(pages_data),
+            "total_kpi": len(kpi_data)
+        }
+    }
+
+    # Возвращаем JSON как файл
+    content = json.dumps(export_data, ensure_ascii=False, indent=2)
+    return Response(
+        content=content,
+        media_type="application/json",
+        headers={
+            "Content-Disposition": 'attachment; filename="otd_backup.json"'
+        }
+    )
+
+
+@router.get("/export-users", dependencies=[Depends(admin_only)])
+async def export_users(session: AsyncSession = Depends(get_async_session)):
+    """
+    Экспорт всех пользователей и ролей в JSON.
+    Админ может скачать копию.
+    """
+    # Получаем пользователей с email и ролью (имя роли через join)
+    users_result = await session.execute(
+        select(users.c.id, users.c.email, roles.c.name.label("role"))
+        .join(roles, users.c.role_id == roles.c.id)
+    )
+    users_data = [row._asdict() for row in users_result.all()]
+
+    # Формируем JSON
+    export_data = {
+        "users": users_data,
+        "_meta": {
+            "exported_at": datetime.utcnow().isoformat(),
+            "total_users": len(users_data)
+        }
+    }
+
+    content = json.dumps(export_data, ensure_ascii=False, indent=2)
+    return Response(
+        content=content,
+        media_type="application/json",
+        headers={
+            "Content-Disposition": 'attachment; filename="otd_users_backup.json"'
+        }
+    )

@@ -14,6 +14,7 @@ body {
 
 .app-container {
   display: flex;
+  flex-direction: column; /* 🔥 Делаем колонку: сначала шапка, потом контент */
   height: 100vh;
   width: 100%;
   overflow: hidden;
@@ -23,6 +24,7 @@ body {
 .content {
   flex: 1;
   padding: 2rem;
+  padding-bottom: 6rem;
   overflow-y: auto;
   background: #fff;
 }

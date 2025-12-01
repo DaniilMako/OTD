@@ -31,3 +31,40 @@
 .logout-button:hover {
   background-color: #b71c1c;
 }
+
+.import-section {
+  margin: 16px 0;
+}
+
+.import-section label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.user-select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  font-size: 14px;
+}
+
+.import-upload {
+  margin-top: 12px;
+}
+
+.download-db-button {
+  padding: 10px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.download-db-button:hover {
+  background: #0056b3;
+}

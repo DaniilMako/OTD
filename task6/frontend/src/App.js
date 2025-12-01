@@ -20,71 +20,56 @@ import { useEffect, useState } from "react";
 
 function AppContent() {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
   const [trackedPaths, setTrackedPaths] = useState([]);
 
 
-  // Проверка токена при загрузке и смене маршрута
+  // Проверка токена при загрузке
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
-
     if (token) {
       fetch("http://localhost:8000/auth/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          if (res.status === 401) {
-            // Токен невалиден
-            localStorage.removeItem("token");
-            setIsAuthenticated(false);
-            setRole(null);
-            return null;
-          }
-          return res.json();
+          if (res.ok) return res.json();
+          localStorage.removeItem("token");
+          throw new Error("Invalid token");
         })
         .then((data) => {
-          if (data) {
-            setRole(data.role); // роль из БД
-          } else {
-            setRole(null);
-          }
+          setIsAuthenticated(true);
+          setRole(data.role);
         })
-        .catch((err) => {
-          console.error("Failed to fetch user profile:", err);
+        .catch(() => {
+          setIsAuthenticated(false);
           setRole(null);
+          localStorage.removeItem("token");
         });
     } else {
+      setIsAuthenticated(false);
       setRole(null);
     }
-  }, [location]);
+  }, []);
 
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
     setIsAuthenticated(false);
     setRole(null);
+    // Остаться на /intro
   };
 
   // Загрузка путей
   useEffect(() => {
     if (!isAuthenticated) return;
-
     const token = localStorage.getItem("token");
     fetch("http://localhost:8000/admin/pages/paths", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
-      .then((data) => {
-        const paths = Array.isArray(data.paths) ? data.paths : [];
-        setTrackedPaths(paths);
-      })
-      .catch((err) => {
-        console.error("Failed to load tracked paths:", err);
-        setTrackedPaths([]);
-      });
+      .then((data) => setTrackedPaths(Array.isArray(data.paths) ? data.paths : []))
+      .catch(() => setTrackedPaths([]));
   }, [isAuthenticated]);
 
 
@@ -142,23 +127,17 @@ function AppContent() {
     };
   }, [location.pathname, isAuthenticated, trackedPaths]);
 
-  // Редирект на /login, если неавторизован
-  if (!isAuthenticated && !["/login", "/register"].includes(location.pathname)) {
+  // В AppContent
+  const publicPaths = ["/intro", "/main", "/conclusion"];
+
+  if (!isAuthenticated && !["/login", "/register", ...publicPaths].includes(location.pathname)) {
     return <Navigate to="/login" replace />;
   }
 
-  // Страницы без сайдбара
-  const noSidebar = ["/login", "/register"].includes(location.pathname);
-
   return (
     <div className="app-container">
-      {/* Сайдбар — только если нужен */}
-      {!noSidebar && isAuthenticated && (
-        <Sidebar 
-        isAuthenticated={isAuthenticated} 
-        role={role} 
-        onLogout={handleLogout} />
-      )}
+      {/* 🔝 Сайдбар всегда сверху */}
+      <Sidebar isAuthenticated={isAuthenticated} role={role} onLogout={handleLogout} />
 
       {/* Основной контент — всегда */}
       <main className="content">
@@ -171,7 +150,8 @@ function AppContent() {
           <Route path="/conclusion" element={<ConclusionPanel />} />
           <Route path="/posts" element={<PostsPanel />} />
           <Route path="/image" element={<ImageUpload />} />
-          {isAuthenticated && <Route path="/profile" element={<ProfilePage />} />}
+          
+          <Route path="/profile" element={isAuthenticated ? <ProfilePage role={role} /> : <Navigate to="/login" />} />
           {role === "admin" && <Route path="/api" element={<APIDocumentation />} />}
           {role === "admin" && <Route path="/stats" element={<StatsPanel />} />}
         </Routes>
